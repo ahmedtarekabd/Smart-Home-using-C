@@ -21,7 +21,7 @@ void Timer1_Start(timer1_clockSelect_t clockSelect);
 void Timer1_Stop();
 
 // For PWM Modes
-void Timer1_SetDuty(u8 dutyPercentage);
-void Timer1_SetFrequency(u8 frequency);
+void Timer1_SetDuty(f32 Ton);
+void Timer1_SetFrequency(u16 frequency);
 
 #endif /* SOURCE_01_MCAL_TIMER1_INC_TIMER1_H_ */

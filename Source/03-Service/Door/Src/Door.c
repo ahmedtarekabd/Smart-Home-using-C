@@ -6,6 +6,7 @@
  */
 
 #include "Door.h"
+#include <util/delay.h>
 
 static isOpen = 0;
 
@@ -25,6 +26,7 @@ void Door_Open()
 
 	// Set Angle to 90
 	Servo_SetAngle(90);
+	_delay_ms(10);
 
 	// Stop Servo
 	Servo_Stop();
@@ -41,6 +43,7 @@ void Door_Close()
 
 	// Set Angle to 0
 	Servo_SetAngle(0);
+	_delay_ms(10);
 
 	// Stop Servo
 	Servo_Stop();

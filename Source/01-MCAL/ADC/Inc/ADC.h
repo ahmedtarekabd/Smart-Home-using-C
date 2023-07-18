@@ -12,6 +12,7 @@
 #include "Bit_Math.h"
 #include "ADC_Types.h"
 #include "ADC_REG.h"
+#include "Dio.h"
 
 
 void ADC_InitADC();

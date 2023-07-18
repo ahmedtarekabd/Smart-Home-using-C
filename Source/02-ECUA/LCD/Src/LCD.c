@@ -10,6 +10,7 @@
 static u8 row = 0;
 static u8 col = 0;
 static lcd_alignment_t alignment = LCD_LEFT;
+static void LCD_staticdisplayString(u8* _char, lcd_animate_t animate, lcd_alignment_t align);
 
 void LCD_init(void)
 {
@@ -41,7 +42,6 @@ void LCD_init(void)
 	LCD_sendCmd(_LCD_4BIT_MODE);
 	LCD_sendCmd(_LCD_CLEAR);
 	LCD_sendCmd(_LCD_CURSOR_ON);
-
 
 }
 
@@ -99,7 +99,7 @@ void LCD_displayInt(u32 number)
 
 	sprintf(buffer, "%d", number);
 
-	LCD_displayString(buffer);
+	LCD_staticdisplayString(buffer, LCD_NO_ANIMATE, LCD_NONE);
 
 }
 
@@ -118,22 +118,28 @@ void LCD_displayFloat(f32 number)
 
 }
 
-static void LCD_staticdisplayString(u8* _char, lcd_animate_t animate)
+static void LCD_staticdisplayString(u8* _char, lcd_animate_t animate, lcd_alignment_t align)
 {
 
 	u8 size = strlen(_char);
 
-	switch (alignment)
+	if (align)
 	{
 
-	case LCD_LEFT:
-		break;
-	case LCD_CENTER:
-		LCD_setAddressPosition(row, 8 - (size / 2));
-		break;
-	case LCD_RIGHT:
-		LCD_setAddressPosition(row, 16 - size);
-		break;
+		switch (alignment)
+		{
+
+		case LCD_LEFT:
+			LCD_setAddressPosition(row, 0);
+			break;
+		case LCD_CENTER:
+			LCD_setAddressPosition(row, 8 - (size / 2));
+			break;
+		case LCD_RIGHT:
+			LCD_setAddressPosition(row, 16 - size);
+			break;
+
+		}
 
 	}
 
@@ -153,14 +159,14 @@ static void LCD_staticdisplayString(u8* _char, lcd_animate_t animate)
 void LCD_displayString(u8* _char)
 {
 
-	LCD_staticdisplayString(_char, LCD_NO_ANIMATE);
+	LCD_staticdisplayString(_char, LCD_NO_ANIMATE, alignment);
 
 }
 
 void LCD_displayStringWithAnimation(u8* _char)
 {
 
-	LCD_staticdisplayString(_char, LCD_ANIMATE);
+	LCD_staticdisplayString(_char, LCD_ANIMATE, alignment);
 
 }
 
@@ -177,17 +183,12 @@ void LCD_sendCmd(u8 cmd)
 void LCD_ClearRow(lcd_row_t rowNum)
 {
 
-	switch (rowNum) {
-		case LCD_ROW0:
-			LCD_setAddressPosition(LCD_ROW0, 0);
-			break;
-		case LCD_ROW1:
-			LCD_setAddressPosition(LCD_ROW1, 0);
-			break;
-	}
+	LCD_setAddressPosition(rowNum, 0);
 
 	for (u8 i = 0; i < 16; i++)
 		LCD_displayChar(' ');
+
+	LCD_setAddressPosition(rowNum, 0);
 
 }
 
@@ -198,18 +199,20 @@ void LCD_setAlignment(lcd_alignment_t align)
 
 }
 
-void LCD_setAddressPosition(u8 row, u8 col)
+void LCD_setAddressPosition(u8 rowIn, u8 colIn)
 {
 
-	switch (row)
+	switch (rowIn)
 	{
 
 	case LCD_ROW0:
-		LCD_sendCmd(LCD_ROW0_AD + col);
+		row = rowIn;
+		LCD_sendCmd(LCD_ROW0_AD + colIn);
 		break;
 
 	case LCD_ROW1:
-		LCD_sendCmd(LCD_ROW1_AD + col);
+		row = rowIn;
+		LCD_sendCmd(LCD_ROW1_AD + colIn);
 		break;
 
 	}

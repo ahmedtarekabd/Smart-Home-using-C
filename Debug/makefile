@@ -25,10 +25,12 @@ RM := rm -rf
 -include Source/02-ECUA/Button/Src/subdir.mk
 -include Source/01-MCAL/Watchdog/Src/subdir.mk
 -include Source/01-MCAL/UART/Src/subdir.mk
+-include Source/01-MCAL/Timer2/Src/subdir.mk
 -include Source/01-MCAL/Timer1/Src/subdir.mk
 -include Source/01-MCAL/Timer0/Src/subdir.mk
 -include Source/01-MCAL/TWI/Src/subdir.mk
 -include Source/01-MCAL/SPI/Src/subdir.mk
+-include Source/01-MCAL/IEEPROM/Src/subdir.mk
 -include Source/01-MCAL/GIE/Src/subdir.mk
 -include Source/01-MCAL/EXTI/Src/subdir.mk
 -include Source/01-MCAL/Dio/Src/subdir.mk

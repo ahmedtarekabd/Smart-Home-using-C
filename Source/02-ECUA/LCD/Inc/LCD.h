@@ -27,6 +27,6 @@ void LCD_sendCmd(u8 cmd);
 
 void LCD_ClearRow(lcd_row_t rowNum);
 void LCD_setAlignment(lcd_alignment_t align);
-void LCD_setAddressPosition(u8 row, u8 col);
+void LCD_setAddressPosition(u8 rowIn, u8 colIn);
 
 #endif /* SOURCE_02_ECUA_LCD_HEADER_LCD_H_ */

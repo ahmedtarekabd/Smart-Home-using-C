@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "lm35.h": "c",
+        "std_types.h": "c",
+        "adc.h": "c"
+    }
+}

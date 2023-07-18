@@ -8,7 +8,10 @@ Source/01-MCAL/Timer1/Src/Timer1.o Source/01-MCAL/Timer1/Src/Timer1.o:  \
   E:\Projects\Embedded\Smart_Home\Source\01-MCAL\GIE\Inc/GIE.h \
   E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio.h \
   E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio_register.h \
-  E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio_Types.h
+  E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio_Types.h \
+  E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD.h \
+  E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD_Types.h \
+  E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD_Defs.h
 
 E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Timer1\Inc/Timer1.h:
 
@@ -27,3 +30,9 @@ E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio.h:
 E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio_register.h:
 
 E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio_Types.h:
+
+E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD.h:
+
+E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD_Types.h:
+
+E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD_Defs.h:

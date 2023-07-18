@@ -21,15 +21,15 @@ void Servo_Init()
 void Servo_Start()
 {
 
-	// Set prescaler to 64
-	Timer1_Start(TIMER1_BY_64);
+	// Set prescaler to 256
+	Timer1_Start(TIMER1_BY_256);
 
 }
 
 void Servo_Stop()
 {
 
-	// Stop timer funnctio (by setting no clock)
+	// Stop timer funnction (by setting no clock)
 	Timer1_Stop();
 
 }
@@ -37,10 +37,17 @@ void Servo_Stop()
 void Servo_SetAngle(u8 angle)
 {
 
-	f32 value = 1 / (( angle * 0.0056 ) + 1);
+	// Validation
+	if (angle < 0 || angle > 180)
+	{
+		return;
+	}
 
-	u8 percentage = (value / 50) * 100;
+	// Servo operate at duty cycles with Ton from 0.52ms to 2.4ms: 0 to 180 degree
+	f32 percentage = (angle / 180.0);
+	f32 minValue = (0.52 / 1000);
+	f32 Ton = minValue + (2.4 - 0.52) / 1000 * percentage;
 
-	Timer1_SetDuty(percentage);
+	Timer1_SetDuty(Ton);
 
 }

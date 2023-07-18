@@ -7,6 +7,8 @@
 
 #include "UART.h"
 #include "Led.h"
+#include <util/delay.h>
+#include <avr/io.h>
 
 void UART_Init(u32 baudrate)
 {
@@ -15,9 +17,9 @@ void UART_Init(u32 baudrate)
 	UART_UCSRB_REG |= 3 << 3;
 
 	// Set baudrate
-	u32 ubrr = ( 16000000UL / (16 * baudrate) - 1);
-	UART_UBRRH_REG |= ubrr >> 8;
-	UART_UBRRL_REG |= ubrr;
+	u32 ubrr = ( (16000000.0 / (16.0 * baudrate)) - 1);
+	UART_UBRRH_REG = ubrr >> 8;
+	UART_UBRRL_REG = ubrr;
 
 	// Write in UCSRC, set frame size to 8-bit
 	UART_UCSRC_REG |= (1 << 7) | (3 << 1);
@@ -25,17 +27,22 @@ void UART_Init(u32 baudrate)
 	// By default stop bit -> 1 bit
 	// By default parity bit is disabled
 
+//	Dio_configChanel(DIO_PORTD, DIO_PIN0, DIO_INPUT);
+//	Dio_configChanel(DIO_PORTD, DIO_PIN1, DIO_OUTPUT);
+
 }
 
 u8 UART_Receive()
 {
 
 	// Wait for unread data
-//	while ( !((UART_UCSRA_REG >> 7) & 1) );
-	if ( ((UART_UCSRA_REG >> 3) & 1) )
-	{
-		Led_toggle(LED1);
-	}
+	while ( !((UART_UCSRA_REG >> 7) & 1) );
+	return UART_UDR_REG;
+
+}
+
+u8 UART_ReceiveNonBlock()
+{
 
 	if ( ((UART_UCSRA_REG >> 7) & 1) )
 	{
@@ -46,15 +53,15 @@ u8 UART_Receive()
 		return '\0';
 	}
 
-
 }
 
 void UART_Transmit(u8 data)
 {
 	// Wait for unread data (flag is 1 if it is ready)
-	while (((UART_UCSRA_REG >> 5) & 1) == 0);
+	while ( !((UART_UCSRA_REG >> 5) & 1) );
 
 	UART_UDR_REG = data;
+
 
 }
 
@@ -74,8 +81,16 @@ void UART_SendString(u8* string)
 void UART_ReciveString(u8* string, u8 size)
 {
 	
+	// Clear buffer for input more that required size from last prompt
+	while (UART_ReceiveNonBlock() != '\0');
 	
 	u8 tmp = UART_Receive();
+
+	if (size == 1)
+	{
+		return;
+	}
+
 	u8 i = 0;
 
 
@@ -87,6 +102,9 @@ void UART_ReciveString(u8* string, u8 size)
 		i++;
 
 	}
+
+	// Clear buffer for input more that required size
+	while (UART_ReceiveNonBlock() != '\0');
 
 	// For precise memory allocation, add 1 to the size of the array for the null char
 	string[i] = '\0';

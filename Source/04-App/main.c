@@ -6,6 +6,7 @@
  */
 
 #include <string.h>
+#include <stdlib.h>
 #include <util/delay.h>
 #include "Bit_Math.h"
 #include "Std_Types.h"
@@ -24,30 +25,38 @@
 #include "Servo.h"
 #include "TWI_interface.h"
 #include "DCMotor.h"
+#include "Timer1.h"
+#include "IEEPROM.h"
 
 #include "Login.h"
 #include "Door.h"
 
-#include "Timer0.h"
 
 #include <avr/io.h>
+#include <avr/eeprom.h>
 
 
+#define FORMAT_EEPROM	0
 
+#if FORMAT_EEPROM == 1
 
-//#if FORMAT_EEPROM == 1
-//
-//int main(void)
-//{
-//
-//
-//
-//}
-//
-//#else
+	int main(void)
+	{
 
-u8 x = 0;
-u8 input[3];
+		// No Users
+		IEEPROM_Write(0, 0);
+		for (u16 i = 1; i < MEMORY_SIZE; i++)
+		{
+			IEEPROM_Write(i, 0xff);
+		}
+
+	}
+
+#else
+
+u8 userType;
+u8 dimmerLamp[4];
+u8 input[2];
 
 void setup();
 void loop();
@@ -56,16 +65,13 @@ void loop();
 void main(void)
 {
 
-//	PORTA = 0xff;
 
 	LCD_init();
 
-	LCD_displayChar('a');
-
-//	setup();
+	setup();
 	while (1)
 	{
-//		loop();
+		loop();
 	}
 
 }
@@ -81,120 +87,122 @@ void setup()
 	Buzzer_init();
 	LM35_Init();
 	DCMotor_Init(DCMOTOR_1);
+	Door_Init();
+	Relay_Init();
 
-	login();
+	userType = login();
+//	userType = '2';
+	HC05_SendString("Enter command...\n");
+	LCD_setAddressPosition(0, 0);
+	LCD_displayString("Enter command...");
+	LCD_setAddressPosition(1, 0);
 
 }
-
-
 
 void loop()
 {
 
-	// Get Command
-	// Execute
 
-	/*	Admin Mode 	*/
-	if (HC05_IsConnected())
+	// Get Command
+	u8 command = '\0';
+
+	// Admin Mode
+	if (userType == '1')
 	{
 
-		// 6 Lamps
-		HC05_ReceiveString(input, 2);
-		/*	Admin Mode 	*/
-		if (strcmp(input, "1") == 0)
-		{
+//		HC05_ReceiveString(input, 2);
+		command = HC05_ReceiveCharNonBlock();
 
-			// Relay 1 On function
-			Relay_toogle(Relay_1);
+		switch (command) {
+			// 6 Lamps
+			case '1':
+				// Relay 1 On function
+				Relay_toogle(Relay_1);
+				break;
+			case '2':
+				// Relay 2 On function
+				Relay_toogle(Relay_2);
+				break;
+			case '3':
+				// Relay 3 On function
+				Relay_toogle(Relay_3);
+				break;
+			case '4':
+				// Relay 4 On function
+				Relay_toogle(Relay_4);
+				break;
+			case '5':
+				// Relay 5 On function
+				Relay_toogle(Relay_5);
+				break;
+			case '6':
 
+				// Relay 6 On function
+				HC05_SendString("Enter percentage (0-100)...\n");
+				HC05_ReceiveString(dimmerLamp, 4);
+				u8* nextToLastDigit;
+				Relay_setDimmer(strtol(dimmerLamp, &nextToLastDigit, 10));
+				break;
+
+			case '7':
+				// switch servo
+				Door_Toogle();
+				break;
 		}
-		else if (strcmp(input, "2") == 0)
-		{
-
-			// Relay 2 On function
-			Relay_toogle(Relay_2);
-
-		}
-		else if (strcmp(input, "3") == 0)
-		{
-
-			// Relay 3 On function
-			Relay_toogle(Relay_3);
-
-		}
-		else if (strcmp(input, "4") == 0)
-		{
-
-			// Relay 4 On function
-			Relay_toogle(Relay_4);
-
-		}
-		else if (strcmp(input, "5") == 0)
-		{
-
-			// Relay 5 On function
-			Relay_toogle(Relay_5);
-
-		}
-		// Repeat until lamp 6
-
-		// Door
-		else if (strcmp(input, "7") == 0)
-		{
-
-			// switch servo
-			Door_Toogle();
-
-		}
-
-
 
 	}
-	/*	User Mode 	*/
+
+	// User Mode
 	else
 	{
 
+		command = Keypad_getButton();
+//		input = Keypad_GetString(input, 2);
 
-		Keypad_GetString(input, 2);
-		// 6 Lamps
-		if (strcmp(input, "1") == 0)
-		{
+		switch (command) {
+			// 6 Lamps
+			case '1':
+				// Relay 1 On function
+				Relay_toogle(Relay_1);
+				break;
+			case '2':
+				// Relay 2 On function
+				Relay_toogle(Relay_2);
+				break;
+			case '3':
+				// Relay 3 On function
+				Relay_toogle(Relay_3);
+				break;
+			case '4':
+				// Relay 4 On function
+				Relay_toogle(Relay_4);
+				break;
+			case '5':
+				// Relay 5 On function
+				Relay_toogle(Relay_5);
+				break;
+			case '6':
 
-			// Relay 1 On function
-			Relay_toogle(Relay_1);
+				// Relay 6 On function
+				LCD_setAddressPosition(1, 0);
+				LCD_displayString("Enter from 0-100");
+				Keypad_GetString(dimmerLamp, 4);
+				u8* nextToLastDigit;
+				Relay_setDimmer(strtol(dimmerLamp, &nextToLastDigit, 10));
+				LCD_ClearRow(1);
+				LCD_setAddressPosition(1, 0);
+				break;
 
-		}
-		else if (strcmp(input, "2") == 0)
-		{
-
-			// Relay 2 On function
-			Relay_toogle(Relay_2);
-
-		}
-		else if (strcmp(input, "3") == 0)
-		{
-
-			// Relay 3 On function
-			Relay_toogle(Relay_3);
-
-		}
-		else if (strcmp(input, "4") == 0)
-		{
-
-			// Relay 4 On function
-			Relay_toogle(Relay_4);
-
-		}
-		else if (strcmp(input, "5") == 0)
-		{
-
-			// Relay 5 On function
-			Relay_toogle(Relay_5);
-
+			case '7':
+				// switch servo
+				Door_Toogle();
+				break;
 		}
 
 
 	}
+
+	command = '\0';
 
 	// AC -> Temp Sensor, DC Motor
 	if (LM35_ReadTemperature() > 28)
@@ -215,5 +223,5 @@ void loop()
 }
 
 
-//#endif	// Format EEPROM
+#endif	// Format EEPROM
 

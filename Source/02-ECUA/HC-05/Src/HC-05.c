@@ -15,11 +15,11 @@ void HC05_Init()
 
 	// Enable
 	// Command mode -> set
-	// Data mode -> clear
-	Dio_configChanel(DIO_PORTD, DIO_PIN2, DIO_OUTPUT);
+//	// Data mode -> clear
+//	Dio_configChanel(DIO_PORTD, DIO_PIN2, DIO_OUTPUT);
 
-	// State (if the device is connected or not)
-	Dio_configChanel(DIO_PORTD, DIO_PIN3, DIO_INPUT);
+//	// State (if the device is connected or not)
+//	Dio_configChanel(DIO_PORTD, DIO_PIN3, DIO_INPUT);
 
 }
 
@@ -35,32 +35,37 @@ boolean HC05_IsConnected()
 
 }
 
+u8 HC05_ReceiveCharNonBlock()
+{
+
+	return UART_ReceiveNonBlock();
+
+}
+
 boolean HC05_SendString(u8* string)
 {
 
-	if (HC05_IsConnected())
-	{
+//	if (HC05_IsConnected())
+//	{
 
 		UART_SendString(string);
 		return TRUE;
 
-	}
-
-	return FALSE;
+//	}
+//	return FALSE;
 
 }
 
 boolean HC05_ReceiveString(u8* string, u8 size)
 {
 
-	if (HC05_IsConnected())
-	{
+//	if (HC05_IsConnected())
+//	{
 
 		UART_ReciveString(string, size);
 		return TRUE;
 
-	}
-
-	return FALSE;
+//	}
+//	return FALSE;
 
 }

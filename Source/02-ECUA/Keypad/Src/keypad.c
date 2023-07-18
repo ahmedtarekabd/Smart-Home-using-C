@@ -6,6 +6,7 @@
  */
 
 #include "keypad.h"
+#include "LCD.h"
 
 
 u8 Keypad_Layout[4][4] = {
@@ -67,6 +68,9 @@ u8 Keypad_getButton()
 	keypad_row_t row = KEYPAD_INVALID;
 	keypad_col_t col = KEYPAD_INVALID;
 
+//	if (!Keypad_buttonIsPressed())
+//		return KEYPAD_INVALID;
+
 	row = Keypad_getRow();
 
 	if (row == KEYPAD_INVALID)
@@ -77,6 +81,9 @@ u8 Keypad_getButton()
 	if (row == KEYPAD_INVALID || col == KEYPAD_INVALID)
 		return KEYPAD_INVALID;
 
+	while (Keypad_buttonIsPressed() == TRUE);
+	_delay_ms(5);
+
 	return Keypad_Layout[row][col]; // || (row << 4) | col
 
 }
@@ -84,20 +91,24 @@ u8 Keypad_getButton()
 keypad_row_t Keypad_getRow()
 {
 
-	if (Dio_udtreadChanel(DIO_PORTC, DIO_PIN3))
+	if (Dio_udtreadChanel(DIO_PORTC, DIO_PIN3) == 1)
 	{
+//		LCD_displayInt(KEYPAD_ROW0);
 		return KEYPAD_ROW0;
 	}
-	else if (Dio_udtreadChanel(DIO_PORTC, DIO_PIN4))
+	else if (Dio_udtreadChanel(DIO_PORTC, DIO_PIN4) == 1)
 	{
+//		LCD_displayInt(KEYPAD_ROW1);
 		return KEYPAD_ROW1;
 	}
-	else if (Dio_udtreadChanel(DIO_PORTC, DIO_PIN5))
+	else if (Dio_udtreadChanel(DIO_PORTC, DIO_PIN5) == 1)
 	{
+//		LCD_displayInt(KEYPAD_ROW2);
 		return KEYPAD_ROW2;
 	}
-	else if (Dio_udtreadChanel(DIO_PORTC, DIO_PIN6))
+	else if (Dio_udtreadChanel(DIO_PORTC, DIO_PIN6) == 1)
 	{
+//		LCD_displayInt(KEYPAD_ROW3);
 		return KEYPAD_ROW3;
 	}
 	else
@@ -161,21 +172,27 @@ keypad_col_t Keypad_getCol(keypad_row_t row)
 
 }
 
+
 void Keypad_GetString(u8* string, u8 size)
 {
 
-	while (!Keypad_buttonIsPressed());
 	u8 tmp = Keypad_getButton();
-	while (Keypad_buttonIsPressed());
+	while (tmp == KEYPAD_INVALID)
+	{
+		tmp = Keypad_getButton();
+	}
+
 	u8 i = 0;
 
 	while ((tmp != '*') && (i < size - 1))
 	{
 
 		string[i] = tmp;
-		while (!Keypad_buttonIsPressed());
 		tmp = Keypad_getButton();
-		while (Keypad_buttonIsPressed());
+		while (tmp == KEYPAD_INVALID)
+		{
+			tmp = Keypad_getButton();
+		}
 		i++;
 
 	}

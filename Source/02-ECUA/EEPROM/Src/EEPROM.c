@@ -8,6 +8,7 @@
 #include "EEPROM.h"
 #include <util/delay.h>
 #include "Led.h"
+#include "LCD.h"
 
 
 void EEPROM_Init()
@@ -21,11 +22,13 @@ void EEPROM_Init()
 void EEPROM_WriteByte(u8 pageAddress, u8 dataAddress, u8 data)
 {
 
+	LCD_displayChar('S');
 	TWI_sendStartCondition();
 	TWI_sendSlaveAddwithWrite( (0xA0 >> 1) | pageAddress);
 	TWI_sendMasterDataByte(dataAddress);
 	TWI_sendMasterDataByte(data);
 	TWI_sendStopCondition();
+	LCD_displayChar('E');
 
 	// In order to be able to use ReadByte function right after this function
 	_delay_ms(5);
@@ -37,12 +40,14 @@ u8 EEPROM_ReadByte(u8 pageAddress, u8 dataAddress)
 
 	u8 data = 0;
 
+	LCD_displayChar('S');
 	TWI_sendStartCondition();
+	LCD_displayChar('E');
 	TWI_sendSlaveAddwithWrite( (0xA0 >> 1) | pageAddress);
 	TWI_sendMasterDataByte(dataAddress);
 	TWI_sendRepStartCondition();
 	TWI_sendSlaveAddwithRead( (0xA0 >> 1) | pageAddress);
-	TWI_readMasterDataByte(data);
+	TWI_readMasterDataByte(&data);
 	TWI_sendStopCondition();
 
 	// In order to be able to use ReadByte function right after this function
@@ -72,6 +77,7 @@ void EEPROM_ReadString(u8 pageAddress, u8 dataAddress, u8* string, u8 size)
 	{
 
 		string[i] = EEPROM_ReadByte(pageAddress, dataAddress);
+//		LCD_displayInt(i);
 		dataAddress++;
 
 	}

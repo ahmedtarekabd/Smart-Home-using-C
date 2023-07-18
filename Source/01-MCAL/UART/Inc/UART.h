@@ -14,6 +14,8 @@
 void UART_Init(u32 baudrate);
 
 u8 UART_Receive();
+u8 UART_ReceiveNonBlock();
+
 void UART_Transmit(u8 data);
 
 void UART_SendString(u8* string);

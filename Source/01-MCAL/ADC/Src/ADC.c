@@ -10,6 +10,8 @@
 void ADC_InitADC()
 {
 
+	// Don't know how it works without config dio pins to input!
+
 	// Enable ADC
 	SET_BIT(ADC_ADCSRA_REG, ADC_Enable);
 

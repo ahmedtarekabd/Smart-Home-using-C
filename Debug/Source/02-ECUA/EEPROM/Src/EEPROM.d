@@ -9,7 +9,10 @@ Source/02-ECUA/EEPROM/Src/EEPROM.o Source/02-ECUA/EEPROM/Src/EEPROM.o:  \
   E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LED\Inc/Led_Types.h \
   E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio.h \
   E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio_register.h \
-  E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio_Types.h
+  E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio_Types.h \
+  E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD.h \
+  E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD_Types.h \
+  E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD_Defs.h
 
 E:\Projects\Embedded\Smart_Home\Source\02-ECUA\EEPROM\Inc/EEPROM.h:
 
@@ -30,3 +33,9 @@ E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio.h:
 E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio_register.h:
 
 E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Dio\Inc/Dio_Types.h:
+
+E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD.h:
+
+E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD_Types.h:
+
+E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD_Defs.h:

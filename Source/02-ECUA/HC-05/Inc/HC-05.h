@@ -16,6 +16,8 @@ void HC05_Init();
 
 boolean HC05_IsConnected();
 
+u8 HC05_ReceiveCharNonBlock();
+
 boolean HC05_SendString(u8* string);
 boolean HC05_ReceiveString(u8* string, u8 size);
 

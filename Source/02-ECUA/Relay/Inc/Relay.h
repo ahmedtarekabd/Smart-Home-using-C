@@ -25,5 +25,6 @@ void Relay_Init();
 
 void Relay_toogle(Relay_t T);
 
+void Relay_setDimmer(u8 percentage);
 
 #endif /* SOURCE_02_ECUA_RELAY_INC_RELAY_H_ */

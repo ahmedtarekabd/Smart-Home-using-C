@@ -16,7 +16,10 @@ Source/03-Service/Login/Src/Login.o Source/03-Service/Login/Src/Login.o:  \
   E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD_Types.h \
   E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD_Defs.h \
   E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Watchdog\Inc/watchdog.h \
-  E:\Projects\Embedded\Smart_Home\Source\02-ECUA\Buzzer\Inc/Buzzer.h
+  E:\Projects\Embedded\Smart_Home\Source\02-ECUA\Buzzer\Inc/Buzzer.h \
+  E:\Projects\Embedded\Smart_Home\Source\02-ECUA\Keypad\Inc/keypad.h \
+  E:\Projects\Embedded\Smart_Home\Source\02-ECUA\Keypad\Inc/keypad_Types.h \
+  E:\Projects\Embedded\Smart_Home\Source\01-MCAL\IEEPROM\Inc/IEEPROM.h
 
 E:\Projects\Embedded\Smart_Home\Source\03-Service\Login\Inc/Login.h:
 
@@ -51,3 +54,9 @@ E:\Projects\Embedded\Smart_Home\Source\02-ECUA\LCD\Inc/LCD_Defs.h:
 E:\Projects\Embedded\Smart_Home\Source\01-MCAL\Watchdog\Inc/watchdog.h:
 
 E:\Projects\Embedded\Smart_Home\Source\02-ECUA\Buzzer\Inc/Buzzer.h:
+
+E:\Projects\Embedded\Smart_Home\Source\02-ECUA\Keypad\Inc/keypad.h:
+
+E:\Projects\Embedded\Smart_Home\Source\02-ECUA\Keypad\Inc/keypad_Types.h:
+
+E:\Projects\Embedded\Smart_Home\Source\01-MCAL\IEEPROM\Inc/IEEPROM.h:

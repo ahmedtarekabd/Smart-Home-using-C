@@ -24,10 +24,12 @@ Source/01-MCAL/ADC/Src \
 Source/01-MCAL/Dio/Src \
 Source/01-MCAL/EXTI/Src \
 Source/01-MCAL/GIE/Src \
+Source/01-MCAL/IEEPROM/Src \
 Source/01-MCAL/SPI/Src \
 Source/01-MCAL/TWI/Src \
 Source/01-MCAL/Timer0/Src \
 Source/01-MCAL/Timer1/Src \
+Source/01-MCAL/Timer2/Src \
 Source/01-MCAL/UART/Src \
 Source/01-MCAL/Watchdog/Src \
 Source/02-ECUA/Button/Src \

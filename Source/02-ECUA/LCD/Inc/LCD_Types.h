@@ -29,6 +29,7 @@ typedef enum
 typedef enum
 {
 
+	LCD_NONE,
 	LCD_LEFT,
 	LCD_CENTER,
 	LCD_RIGHT

@@ -22,10 +22,12 @@ u8 LM35_ReadTemperature(void)
 
 
 	// Convert from V to mV
-	f32 mVolts = ADC_f32ReadChannel(ADC_CHANNEL1) * 1000;
+	f32 mVolts = ADC_f32ReadChannel(ADC_CHANNEL0) * 1000;
+
+
 
 	// From mV to degree C, where each 10mv -> 1 C
-	u8 degreeC = mVolts / 10;
+	u8 degreeC = (mVolts / 10) + 1;
 
 	return degreeC;
 

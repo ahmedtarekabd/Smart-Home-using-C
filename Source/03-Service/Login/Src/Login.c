@@ -165,11 +165,18 @@ static boolean login_removeUser()
 
 	// Get last user
 	IEEPROM_ReadString(lastUserAddress, user.username, USERNAME_SIZE);
-	IEEPROM_ReadString(lastUserAddress + USERNAME_SIZE, user.password, USERNAME_SIZE);
+	IEEPROM_ReadString(lastUserAddress + USERNAME_SIZE, user.password, PASSWORD_SIZE);
 
 	// Replace the last user with the user that should be removed
 	IEEPROM_WriteString(userIndex, user.username);
 	IEEPROM_WriteString(userIndex + USERNAME_SIZE, user.password);
+
+	// Clear it's data -> 0xff
+	u8 clear[8] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, '\0'};
+	strcpy(user.username, clear);
+	strcpy(user.password, clear);
+	IEEPROM_WriteString(lastUserAddress, user.username);
+	IEEPROM_WriteString(lastUserAddress + USERNAME_SIZE, user.password);
 
 	// Decrease the number of users
 	IEEPROM_Write(0, numOfUsers - 1);

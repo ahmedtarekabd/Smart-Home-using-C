@@ -62,14 +62,11 @@ boolean Keypad_buttonIsPressed()
 u8 Keypad_getButton()
 {
 
-//	if (Keypad_buttonIsPressed() == FALSE)
-//		return KEYPAD_INVALID;
+	// To add delay between multiple inputs, This works well with proteus
+	_delay_ms(25);
 
 	keypad_row_t row = KEYPAD_INVALID;
 	keypad_col_t col = KEYPAD_INVALID;
-
-//	if (!Keypad_buttonIsPressed())
-//		return KEYPAD_INVALID;
 
 	row = Keypad_getRow();
 
@@ -176,10 +173,11 @@ keypad_col_t Keypad_getCol(keypad_row_t row)
 void Keypad_GetString(u8* string, u8 size)
 {
 
-	u8 tmp = Keypad_getButton();
+	u8 tmp = KEYPAD_INVALID;
 	while (tmp == KEYPAD_INVALID)
 	{
 		tmp = Keypad_getButton();
+		_delay_ms(10);
 	}
 
 	u8 i = 0;

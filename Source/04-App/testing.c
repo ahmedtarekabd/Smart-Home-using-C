@@ -194,17 +194,21 @@
 		Keypad_keypadInit();
         LCD_init();
 
+		u8 str[3];
+		Keypad_GetString(str, 3);
+
+		LCD_displayString(str);
 
 		while (1)
         {
 
-    		u8 button = Keypad_getButton();
-
-            if (button != KEYPAD_INVALID)
-            {
-                LCD_displayChar(button);
-                _delay_ms(10);			// Make sure to leave the delay to work in proteus properly
-            }
+//    		u8 button = Keypad_getButton();
+//
+//            if (button != KEYPAD_INVALID)
+//            {
+//                LCD_displayChar(button);
+//                _delay_ms(10);			// Make sure to leave the delay to work in proteus properly
+//            }
 
         }
 

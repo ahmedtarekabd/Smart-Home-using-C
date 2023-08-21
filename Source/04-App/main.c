@@ -52,7 +52,7 @@
 
 	}
 
-#else
+#elif FORMAT_EEPROM == 0
 
 u8 userType;
 u8 dimmerLamp[4];
@@ -79,7 +79,7 @@ void setup()
 	Watchdog_OFF();
 	LCD_init();
 	Keypad_keypadInit();
-	EEPROM_Init();
+	IEEPROM_Init();
 	HC05_Init();
 	Buzzer_init();
 	LM35_Init();

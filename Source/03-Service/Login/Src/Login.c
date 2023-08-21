@@ -16,10 +16,8 @@ static void Reset()
 	LCD_ClearRow(LCD_ROW1);
 	LCD_setAddressPosition(0, 0);
 	LCD_displayString("reset in 3 secs");
-	LCD_setAddressPosition(1, 0);
-	LCD_displayString("reset in 3 secs");
 
-	_delay_ms(2000);
+	// _delay_ms(1000);
 	// Reset
 	Watchdog_ON();
 
@@ -186,7 +184,7 @@ static boolean login_removeUser()
 static void loginAdminMode()
 {
 
-	u8 trials = 0;
+	u8 trials = 1;
 	u8 successOp = TRUE;
 
 	// No need to validate length because they are known
@@ -224,6 +222,7 @@ static void loginAdminMode()
 		else if ( strcmp(command, "login") == 0 )
 		{
 
+
 			// Call login function
 			User user = login_getUser();
 
@@ -232,6 +231,14 @@ static void loginAdminMode()
 			{
 				authUser = user;
 				break;
+			}
+			else if (trials >= 3)
+			{
+				Reset();
+			}
+			else
+			{
+				trials++;
 			}
 
 		}
@@ -250,12 +257,11 @@ static void loginAdminMode()
 static void loginUserMode()
 {
 
-	u8 trials = 0;
+	u8 trials = 1;
 	u8 userFound = 0;
 	u8 response[3];
 
 	User user;
-
 
 	while (trials != MAX_LOGIN_TRIALS)
 	{

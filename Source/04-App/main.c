@@ -65,9 +65,6 @@ void loop();
 void main(void)
 {
 
-
-	LCD_init();
-
 	setup();
 	while (1)
 	{
@@ -110,7 +107,6 @@ void loop()
 	if (userType == '1')
 	{
 
-//		HC05_ReceiveString(input, 2);
 		command = HC05_ReceiveCharNonBlock();
 
 		switch (command) {
@@ -157,7 +153,6 @@ void loop()
 	{
 
 		command = Keypad_getButton();
-//		input = Keypad_GetString(input, 2);
 
 		switch (command) {
 			// 6 Lamps
@@ -192,13 +187,7 @@ void loop()
 				LCD_ClearRow(1);
 				LCD_setAddressPosition(1, 0);
 				break;
-
-			case '7':
-				// switch servo
-				Door_Toogle();
-				break;
 		}
-
 
 	}
 
